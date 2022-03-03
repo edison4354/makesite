@@ -1,36 +1,38 @@
 package main
 
 import (
-	"fmt"
+	"flag"
 	"html/template"
 	"io/ioutil"
 	"os"
+	"strings"
 )
+
+func checkError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
 
 // Page holds all the information we need to generate a new
 // HTML page from a text file on the filesystem.
 type Page struct {
-	Paragraph string
+	Data string
 }
 
 func main() {
-	fileContents, err := ioutil.ReadFile("data/first-post.txt")
-	if err != nil {
-		panic(err)
-	}
+	inputFile := flag.String("file", "first-post.txt", "txt file to pass in")
+	flag.Parse()
 
-	newFile, err := os.Create("first-post.html")
-	if err != nil {
-		panic(err)
-	}
+	fileName := strings.Split(*inputFile, ".")[0] + ".html"
+	fileContents, _ := ioutil.ReadFile("data/" + *inputFile)
 
-	page := Page{}
-
-	page.Paragraph = string(fileContents)
+	page := Page{string(fileContents)}
 
 	t := template.Must(template.New("template.tmpl").ParseFiles("template.tmpl"))
 
-	t.Execute(newFile, page)
+	newFile, _ := os.Create(fileName)
 
-	fmt.Print(string(fileContents))
+	err := t.Execute(newFile, page)
+	checkError(err)
 }
