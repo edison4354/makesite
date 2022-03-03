@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"io/ioutil"
 	"os"
@@ -31,4 +32,5 @@ func main() {
 
 	t.Execute(newFile, page)
 
+	fmt.Print(string(fileContents))
 }
