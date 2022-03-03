@@ -19,7 +19,7 @@ func main() {
 		panic(err)
 	}
 
-	newFile, err := os.Create("new.html")
+	newFile, err := os.Create("first-post.html")
 	if err != nil {
 		panic(err)
 	}
