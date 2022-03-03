@@ -21,11 +21,11 @@ type Page struct {
 }
 
 func main() {
-	inputFile := flag.String("file", "first-post.txt", "txt file to pass in")
+	fileInput := flag.String("file", "first-post.txt", "txt file to pass in")
 	flag.Parse()
 
-	fileName := strings.Split(*inputFile, ".")[0] + ".html"
-	fileContents, _ := ioutil.ReadFile("data/" + *inputFile)
+	fileName := strings.Split(*fileInput, ".")[0] + ".html"
+	fileContents, _ := ioutil.ReadFile("data/" + *fileInput)
 
 	page := Page{string(fileContents)}
 
