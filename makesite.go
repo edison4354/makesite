@@ -8,6 +8,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	. "github.com/logrusorgru/aurora"
 )
 
 // Page holds all the information we need to generate a new
@@ -41,16 +43,18 @@ func main() {
 	flag.Parse()
 
 	if *dirInput != "" {
-		println("Converting all txt files in working directory")
+		fmt.Println(Bold("Converting all txt files in working directory:"))
 		files, err := ioutil.ReadDir(*dirInput)
 		checkError(err)
 
 		for _, file := range files {
 			if filepath.Ext(file.Name()) == ".txt" {
 				new_html(file.Name())
-				fmt.Println(file.Name())
+				fmt.Println(Green(file.Name()))
 			}
 		}
+
+		fmt.Println(Bold(BgGreen("Succesfully created all html files!")))
 	}
 
 	// fileName := strings.Split(*fileInput, ".")[0] + ".html"
